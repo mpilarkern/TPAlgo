@@ -1,3 +1,4 @@
+module Solucion where
 import Data.Char
 
 esMinuscula :: Char -> Bool    --Ej 1
