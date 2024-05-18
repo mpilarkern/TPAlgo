@@ -140,11 +140,14 @@ peorCifrado p [c1,c2] | distancia p (cifrarVigenere p c1) <= distancia p (cifrar
 peorCifrado p (c1:c2:cs) | distancia p (cifrarVigenere p c1) <= distancia p (cifrarVigenere p c2)  = peorCifrado p (c1:cs)
                          | distancia p (cifrarVigenere p c1) > distancia p (cifrarVigenere p c2) = peorCifrado p (c2:cs)
 
+combinacionesVigenereConUnaClave::[String] -> String -> String -> [(String, String)] --devuelve la lista de vectores (msj,clave) que incluye cada msj de la lista input que al cifrar con clave devuelve cifrado
+combinacionesVigenereConUnaClave [] _ _ = []
+combinacionesVigenereConUnaClave (m:ms) clave cifrado | cifrarVigenere m clave == cifrado = (m, clave) : combinacionesVigenereConUnaClave ms clave cifrado
+                                                      | otherwise = combinacionesVigenereConUnaClave ms clave cifrado
 
 -- EJ 15
-combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)]
-combinacionesVigenere [] [] _ = []
-combinacionesVigenere [m] [c] cf | cifrarVigenere m c == cf = [(m, c)]
-                                 | otherwise =  []
-combinacionesVigenere (m:ms) (c:cs) cf | cifrarVigenere m c == cf = (m, c):combinacionesVigenere ms (c:cs) cf
-                                       | otherwise = combinacionesVigenere (m:ms) cs cf
+combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)] --que onda los repetidos?
+combinacionesVigenere _ [] _ = []
+combinacionesVigenere [mensaje] [clave] cifrado | cifrarVigenere mensaje clave == cifrado = [(mensaje, clave)]
+                                                | otherwise =  []
+combinacionesVigenere mensajes (c:cs) cifrado = combinacionesVigenereConUnaClave mensajes c cifrado ++ combinacionesVigenere mensajes cs cifrado
