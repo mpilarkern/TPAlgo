@@ -64,7 +64,7 @@ maximoLista (x:y:xs)| x >= y = maximoLista (x:xs)
                     | x < y = maximoLista (y:xs)
 
 cifradoMasFrecuente:: String -> Int -> (Char, Float) --usa la posición de la frecuencia máxima en la lista de frecuencias para identificar el caracter
-cifradoMasFrecuente palabra n = (chr (posicion frecuenciaMax frecuencias + n + 97) , frecuenciaMax)
+cifradoMasFrecuente palabra n = (chr ((posicion frecuenciaMax frecuencias) + n + 97) , frecuenciaMax)
         where 
             frecuencias = frecuencia palabra
             frecuenciaMax = maximoLista frecuencias
