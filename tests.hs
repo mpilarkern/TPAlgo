@@ -2,94 +2,43 @@ import Solucion
 import Test.HUnit --preguntar si hace falta poner todos los resultados válidos como opcion o solo los que sabemos que da nuestra funcion
 
 
-ejecutarEsMinusucula = runTestTT testEsMinusucula
-testEsMinusucula = test [
-    "caso1" ~: (esMinuscula 'a') =?~ True,
-    "caso2" ~: (esMinuscula 'b') =?~ True,
-    "caso3" ~: (esMinuscula 'c') =?~ True,
-    "caso4" ~: (esMinuscula 'd') =?~ True,
-    "caso5" ~: (esMinuscula 'e') =?~ True,
-    "caso6" ~: (esMinuscula 'A') =?~ False,
-    "caso7" ~: (esMinuscula 'B') =?~ False,
-    "caso8" ~: (esMinuscula 'C') =?~ False,
-    "caso9" ~: (esMinuscula 'D') =?~ False,
-    "caso10" ~: (esMinuscula 'E') =?~ False
- ]
+ejecutarEsMinuscula = runTestTT testEsMinuscula
+testEsMinuscula = test [
+    "Caso 1: primera minúscula" ~: (esMinuscula 'a') ~?= True,
+    "Caso 2: otra minúscula" ~: (esMinuscula 'y') ~?= True,
+    "Caso 3: última minúscula" ~: (esMinuscula 'z') ~?= True,
+    "Caso 4: mayúscula" ~: (esMinuscula 'A') ~?= False,
+    "Caso 5: caracter espacio" ~: (esMinuscula ' ') ~?= False,
+    "Caso 5: otro caracter" ~: (esMinuscula '+') ~?= False
+  ]
 
 ejecutarLetraANatural = runTestTT testLetraANatural
 testLetraANatural = test [
-    "caso a" ~: (letraANatural 'a') =?~ 0,
-    "caso b" ~: (letraANatural 'b') =?~ 1,
-    "caso c" ~: (letraANatural 'c') =?~ 2,
-    "caso d" ~: (letraANatural 'd') =?~ 3,
-    "caso e" ~: (letraANatural 'e') =?~ 4,
-    "caso f" ~: (letraANatural 'f') =?~ 5,
-    "caso g" ~: (letraANatural 'g') =?~ 6,
-    "caso h" ~: (letraANatural 'h') =?~ 7,
-    "caso i" ~: (letraANatural 'i') =?~ 8,
-    "caso j" ~: (letraANatural 'j') =?~ 9,
-    "caso k" ~: (letraANatural 'k') =?~ 10,
-    "caso l" ~: (letraANatural 'l') =?~ 11,
-    "caso m" ~: (letraANatural 'm') =?~ 12,
-    "caso n" ~: (letraANatural 'n') =?~ 13,
-    "caso o" ~: (letraANatural 'o') =?~ 14,
-    "caso p" ~: (letraANatural 'p') =?~ 15,
-    "caso q" ~: (letraANatural 'q') =?~ 16,
-    "caso r" ~: (letraANatural 'r') =?~ 17,
-    "caso s" ~: (letraANatural 's') =?~ 18,
-    "caso t" ~: (letraANatural 't') =?~ 19,
-    "caso u" ~: (letraANatural 'u') =?~ 20,
-    "caso v" ~: (letraANatural 'v') =?~ 21,
-    "caso w" ~: (letraANatural 'w') =?~ 22,
-    "caso x" ~: (letraANatural 'x') =?~ 23,
-    "caso y" ~: (letraANatural 'y') =?~ 24,
-    "caso z" ~: (letraANatural 'z') =?~ 25
- ]
+    "Caso 1: a" ~: (letraANatural 'a') ~?= 0,
+    "Caso 2: o" ~: (letraANatural 'o') ~?= 14,
+    "Caso 3: z" ~: (letraANatural 'z') ~?= 25   
+  ]
 
 ejecutarDesplazar = runTestTT testDesplazar
 testDesplazar = test [
-    "caso: desplaza 1" ~: (desplazar 'a' 1 ) =?~ 'b',
-    "caso: desplaza 5" ~: (desplazar 'a' 5 ) =?~ 'f',
-    "caso: vuelve a empezar" ~: (desplazar 'z' 1 ) =?~ 'a',
-    "caso: desplaza un numero grande" ~: (desplazar 'j' 330 ) =?~ 'b',
-    "caso: desplaza uno negativo" ~: (desplazar 'm' (-10) ) =?~ 'c',
-    "caso: da la vuelta" ~: (desplazar 'x' 5 ) =?~ 'c', 
-    "caso: da la vuelta al reves" ~: (desplazar 'b' (-11) ) =?~ 'q', 
-    "caso: desplaza un negativo grande" ~: (desplazar 'd' (-157) ) =?~ 'c',
-    "caso: no se desplaza" ~: (desplazar 'z' 0 ) =?~ 'z'
-]
-
-ejecutarCifrar = runTestTT testCifrar
-testCifrar = test [ 
-    "caso: cifra -1" ~: (cifrar "vaca" (-1)) =?~ "uzbz",
-    "caso" ~: (cifrar "vaca" 2) =?~ "xcec",
-    "caso" ~: (cifrar "mile" 3) =?~ "ploh",
-    "caso" ~: (cifrar "mile" 148) =?~ "eadw",
-    "caso: cifra un n negativo grande" ~: (cifrar "pilar" (-180)) =?~ "rknct",
-    "caso: cifra el resultado del anterior" ~: (cifrar "rknct" 180) =?~ "pilar",
-    "caso: no cifra " ~: (cifrar "ivan" 0) =?~ "ivan",
-    "caso: " ~: (cifrar "arbol" (-8)) =?~ "sjtgd",
-    "caso" ~: (cifrar "vicky" (-5)) =?~ "qdxft"
-]
-
-ejecutarDescifrar = runTestTT testDescifrar
-testDescifrar = test [
-    "caso" ~: (descifrar "uzbz" (-1)) =?~ "vaca",
-    "caso" ~: (descifrar "vaca" 1) =?~ "uzbz",
-    "caso" ~: (descifrar "vaca" 27) =?~ "uzbz",
-    "caso" ~: (descifrar "eadw" 148) =?~ "mile",
-    "caso" ~: (descifrar "vaca" 27) =?~ "uzbz"
-    ,
-]
+    "Caso 1: n positivo" ~: (desplazar 'a' 1 ) ~?= 'b',
+    "Caso 2: n positivo más de una vuelta" ~: (desplazar 'j' 330 ) ~?= 'b',
+    "Caso 3: n negativo" ~: (desplazar 'm' (-10) ) ~?= 'c',
+    "Caso 4: da la vuelta" ~: (desplazar 'x' 5 ) ~?= 'c', 
+    "Caso 5: da la vuelta al reves" ~: (desplazar 'b' (-11) ) ~?= 'q', 
+    "Caso 6: n = 0" ~: (desplazar 'z' 0 ) ~?= 'z',
+    "Caso 7: c no es una minúscula" ~: (desplazar '+' 0 ) ~?= '+'   
+ ]
 
 ejecutarCifrar = runTestTT testCifrar
 
 testCifrar = test [
     "Caso 1: palabra es vacía" ~: (cifrar [] 5) ~?= [],
     "Caso 2: todas minúsculas" ~: (cifrar "computacion" 6) ~?= "iusvazgiout",
-    "Caso3: todas mayúsculas" ~: (cifrar "COMPUTACION" 9) ~?= "COMPUTACION",
-    "Caso 4: mayúsculas y minúsculas intercaladas" ~: (cifrar "comPuTAcioN" 17) ~?= "tfPlTAtzfN" 
-    ]
+    "Caso 3: todas mayúsculas" ~: (cifrar "COMPUTACION" 9) ~?= "COMPUTACION",
+    "Caso 4: mayúsculas y minúsculas intercaladas" ~: (cifrar "comPuTAcioN" 17) ~?= "tfdPlTAtzfN", 
+    "Caso 5: n = 0" ~: (cifrar "mile" 0) ~?= "mile"
+     ]
 
 
 ejecutarDescifrar = runTestTT testDescifrar
@@ -98,12 +47,15 @@ testDescifrar = test [
     "Caso 1: palabra es vacía" ~: (descifrar [] 4) ~?= [],
     "Caso 2: todas minúsculas" ~: (descifrar "iusvazgiout" 6) ~?= "computacion",
     "Caso 3: todas mayúsculas" ~: (descifrar "COMPUTACION" 9) ~?= "COMPUTACION",
-    "Caso 4: mayúsculas y minúsculas intercaladas" ~: (descifrar "tfPlTAtzfN" 17) ~?= "comPuTAcioN"
+    "Caso 4: mayúsculas y minúsculas intercaladas" ~: (descifrar "tfdPlTAtzfN" 17) ~?= "comPuTAcioN",
+    "Caso 5: n = 0" ~: (descifrar "mile" 0) ~?= "mile"
     ]
 
 
+ejecutarCifrarLista :: IO Counts
 ejecutarCifrarLista = runTestTT testCifrarLista
 
+testCifrarLista :: Test
 testCifrarLista = test [
     "Caso 1: palabras en minúscula" ~: (cifrarLista ["computacion", "algoritmos", "codigo"]) ~?= ["computacion", "bmhpsjumpt", "eqfkiq"],
     "Caso 2: palabras en mayúscula" ~: (cifrarLista ["COMPUTACION", "ALGORITMOS", "CODIGO"]) ~?= ["COMPUTACION", "ALGORITMOS", "CODIGO"],
@@ -111,6 +63,51 @@ testCifrarLista = test [
     "Caso 4: palabras con letras mayúsculas y minúsculas" ~: (cifrarLista ["CompUtACion", "aLgorITmoS", "CODiGo"]) ~?= ["CompUtACion", "bLhpsITnpS", "CODjGp"],
     "Caso 5: lista vacía" ~: (cifrarLista []) ~?= []
     ]
+
+ejecutarTestFrecuencia = runTestTT testFrecuencia
+testFrecuencia :: Test
+testFrecuencia = test [
+    "Caso 1: palabras es vacía" ~: (frecuencia []) ~?= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "Caso 2: palabra en mayúscula" ~: (frecuencia "COMPUTACION") ~?= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    "Caso 3: palabra sin letras repetidas" ~: (frecuencia "intro") ~?= [0,0,0,0,0,0,0,0,20.0,0,0,0,0,20.0,20.0,0,0,20.0,0,20.0,0,0,0,0,0,0],
+    "Caso 4: palabra con letras repetidas" ~: (frecuencia "codigo") ~?= [0,0,16.666666,16.666666,0,0,16.666666,0,16.666666,0,0,0,0,0,33.333332,0,0,0,0,0,0,0,0,0,0,0], --preguntar lo de igualdad de floats
+    "Caso 5: palabra con minúsculas y mayúsculas sin repetidas" ~: (frecuencia "IntRO") ~?= [0,0,0,0,0,0,0,0,0,0,0,0,0,50.0,0,0,0,0,0,50.0,0,0,0,0,0,0],
+    "Caso 6: palabra con minúsculas y mayúsculas con minúsculas repetidas" ~: (frecuencia "CodIGo") ~?= [0,0,0,33.333332,0,0,0,0,0,0,0,0,0,0,66.666667,0,0,0,0,0,0,0,0,0,0,0],
+    "Caso 7: palabra con minúsculas y mayúsculas con mayúsculas repetidas" ~: (frecuencia "CodIgO") ~?= [0,0,0,33.333332,0,0,33.333332,0,0,0,0,0,0,0,33.333332,0,0,0,0,0,0,0,0,0,0,0]
+ ]
+
+
+ejecutarEsDescifrado = runTestTT testEsDescifrado
+testEsDescifrado = test [
+    "Caso 1: no es un descifrado" ~: esDescifrado ("hola","holu") ~?= False,
+    "Caso 2: misma palabra (n=0)" ~: esDescifrado ("hola","hola") ~?= True,
+    "Caso 3: es descifrado todo minúscula" ~: esDescifrado ("hola","szwl") ~?= True,
+    "Caso 4: es descifrado minúsculas y otros" ~: esDescifrado ("Hol a++","Hzw l++") ~?= True,
+    "Caso 5: es descifrado sin minúsculas" ~: esDescifrado ("H0L A++","H0L A++") ~?= True,
+    "Caso 6: no es descifrado minúsculas y otros" ~: esDescifrado ("Hol a-+","Hzw l++") ~?= False,
+    "Caso 7: palabras con distinta longitud" ~: esDescifrado ("Holaa","Hola") ~?= False
+  ]
+
+
+ejecutarExpandirClave = runTestTT testExpandirClave
+
+testExpandirClave = test [
+    "Caso 1: clave mas corta que n" ~: expandirClave "compu" 10 ~?= "compucompu",
+    "Caso 2: clave del mismo tamaño que n" ~: expandirClave "compu" 5 ~?= "compu",
+    "Caso 3: clave mas larga que n" ~: expandirClave "compucomputadora" 5 ~?= "compu",
+    "Caso 4: clave con una sola letra" ~: expandirClave "a" 3 ~?= "aaa"
+    ]
+
+ejecutarCifrarVigenere = runTestTT testCifrarVigenere
+
+testCifrarVigenere = test [
+    "Caso 1: el resultado tiene q ser el mismo" ~: cifrarVigenere "hola" "a" ~?= "hola",
+    "Caso 2: clave más larga que el mensaje" ~: cifrarVigenere "hola" "abcdabcd" ~?= "hola",
+    "Caso 3: mensaje vacio" ~: cifrarVigenere "" "clave" ~?= "",
+    "Caso 4: cifrado que rota toda la palabra" ~: cifrarVigenere "hola" "zzzz" ~?= "hnkz",
+    "Caso 5: test del TP" ~: cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv"
+    ]
+
 
 ejecutarPeorCifrado = runTestTT testPeorCifrado
 

@@ -39,14 +39,21 @@ cuantasApariciones x (y:ys) | not (elem x (y:ys)) = 0
                             | x == y = 1 + cuantasApariciones x ys
                             | otherwise = cuantasApariciones x ys
 
+cantMinusculas :: String -> Int --devuelve la cantidad de letras minúsculas en una palabra
+cantMinusculas [] = 0
+cantMinusculas (c:cs) | esMinuscula c = 1 + cantMinusculas cs
+                      | otherwise = cantMinusculas cs
+
 porcentajeDeApariciones:: Char -> String -> Float
-porcentajeDeApariciones c palabra = 100 * fromIntegral (cuantasApariciones c palabra) / fromIntegral ( length palabra)
+porcentajeDeApariciones c palabra | not (elem c palabra) = 0
+                                  | otherwise = 100 * fromIntegral (cuantasApariciones c palabra) / fromIntegral ( cantMinusculas palabra)
 
 frecuenciaAux :: String -> String -> [Float] --preguntar al profe
 frecuenciaAux _ [] = []
 frecuenciaAux palabra minusculas = porcentajeDeApariciones (head minusculas) palabra : frecuenciaAux palabra (tail minusculas)
 
 frecuencia:: String -> [Float]
+frecuencia [] = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] --preguntar porque el requiere no aclara
 frecuencia palabra = frecuenciaAux palabra "abcdefghijklmnopqrstuvwxyz"
 
 maximoLista:: [Float] -> Float
@@ -66,7 +73,11 @@ nDesplazamiento :: Char -> Char -> Int --devuelve el desplazamiento de un caract
 nDesplazamiento x y = ord y - ord x  
 
 esDescifrado :: (String,String) -> Bool
-esDescifrado ((p1:pa),(p2:pb)) | cifrar (p1:pa) (nDesplazamiento p1 p2) == (p2:pb) = True 
+esDescifrado ([],[]) = True
+esDescifrado ((p1:pa),(p2:pb)) | length (p1:pa) /= length (p2:pb) = False
+                               | not (esMinuscula p1) && p1 == p2 = esDescifrado (pa,pb)
+                               | not (esMinuscula p1) && p1 /= p2 = False
+                               | cifrar (p1:pa) (nDesplazamiento p1 p2) == (p2:pb) = True 
                                | otherwise = False
 
 hayDescifrados:: String -> [String] -> Bool
