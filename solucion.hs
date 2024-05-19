@@ -136,13 +136,6 @@ distancia [] [] = 0
 distancia [x] [y] = absoluto (letraANatural x - letraANatural y)
 distancia (x:xs) (y:ys) = absoluto (letraANatural x - letraANatural y) + distancia xs ys  --preguntar
 
-minimo:: [Int] -> Int --borrar
-minimo [x] = x
-minimo [x,y] | x <= y = x
-             | x > y = y
-minimo (x:y:xs) | x <= y = minimo (x:xs)
-                | x > y = minimo (y:xs)
-
 -- EJ 14
 peorCifrado :: String -> [String] -> String 
 peorCifrado palabra [clave] = clave
