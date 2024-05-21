@@ -1,3 +1,10 @@
+-- Nombre de Grupo: Sambuchito
+--Integrantes:
+--Integrante1: 45431079, Amaro Milena Paula
+--Integrante2: 46027355, Kern María Pilar 
+--Integrante3: 45679153, Gorgone Victoria Abril
+--Integrante4: 45749818, Schuster Iván
+
 module Solucion where
 import Data.Char
 
