@@ -1,3 +1,10 @@
+-- Nombre de Grupo: Sambuchito
+--Integrantes:
+--Integrante1: 45431079, Amaro Milena Paula
+--Integrante2: 46027355, Kern María Pilar 
+--Integrante3: 45679153, Gorgone Victoria Abril
+--Integrante4: 45749818, Schuster Iván
+
 module Solucion where
 import Data.Char
 
@@ -39,14 +46,21 @@ cuantasApariciones x (y:ys) | not (elem x (y:ys)) = 0
                             | x == y = 1 + cuantasApariciones x ys
                             | otherwise = cuantasApariciones x ys
 
+cantMinusculas :: String -> Int --devuelve la cantidad de letras minúsculas en una palabra
+cantMinusculas [] = 0
+cantMinusculas (c:cs) | esMinuscula c = 1 + cantMinusculas cs
+                      | otherwise = cantMinusculas cs
+
 porcentajeDeApariciones:: Char -> String -> Float
-porcentajeDeApariciones c palabra = 100 * fromIntegral (cuantasApariciones c palabra) / fromIntegral ( length palabra)
+porcentajeDeApariciones c palabra | not (elem c palabra) = 0
+                                  | otherwise = 100 * fromIntegral (cuantasApariciones c palabra) / fromIntegral ( cantMinusculas palabra)
 
 frecuenciaAux :: String -> String -> [Float] --preguntar al profe
 frecuenciaAux _ [] = []
 frecuenciaAux palabra minusculas = porcentajeDeApariciones (head minusculas) palabra : frecuenciaAux palabra (tail minusculas)
 
 frecuencia:: String -> [Float]
+frecuencia [] = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] --preguntar porque el requiere no aclara
 frecuencia palabra = frecuenciaAux palabra "abcdefghijklmnopqrstuvwxyz"
 
 maximoLista:: [Float] -> Float
@@ -57,7 +71,7 @@ maximoLista (x:y:xs)| x >= y = maximoLista (x:xs)
                     | x < y = maximoLista (y:xs)
 
 cifradoMasFrecuente:: String -> Int -> (Char, Float) --usa la posición de la frecuencia máxima en la lista de frecuencias para identificar el caracter
-cifradoMasFrecuente palabra n = (chr (posicion frecuenciaMax frecuencias + n + 97) , frecuenciaMax)
+cifradoMasFrecuente palabra n = (chr ((posicion frecuenciaMax frecuencias) + n + 97) , frecuenciaMax)
         where 
             frecuencias = frecuencia palabra
             frecuenciaMax = maximoLista frecuencias
@@ -66,7 +80,11 @@ nDesplazamiento :: Char -> Char -> Int --devuelve el desplazamiento de un caract
 nDesplazamiento x y = ord y - ord x  
 
 esDescifrado :: (String,String) -> Bool
-esDescifrado ((p1:pa),(p2:pb)) | cifrar (p1:pa) (nDesplazamiento p1 p2) == (p2:pb) = True 
+esDescifrado ([],[]) = True
+esDescifrado ((p1:pa),(p2:pb)) | length (p1:pa) /= length (p2:pb) = False
+                               | not (esMinuscula p1) && p1 == p2 = esDescifrado (pa,pb)
+                               | not (esMinuscula p1) && p1 /= p2 = False
+                               | cifrar (p1:pa) (nDesplazamiento p1 p2) == (p2:pb) = True 
                                | otherwise = False
 
 hayDescifrados:: String -> [String] -> Bool
@@ -125,13 +143,6 @@ distancia [] [] = 0
 distancia [x] [y] = absoluto (letraANatural x - letraANatural y)
 distancia (x:xs) (y:ys) = absoluto (letraANatural x - letraANatural y) + distancia xs ys  --preguntar
 
-minimo:: [Int] -> Int --borrar
-minimo [x] = x
-minimo [x,y] | x <= y = x
-             | x > y = y
-minimo (x:y:xs) | x <= y = minimo (x:xs)
-                | x > y = minimo (y:xs)
-
 -- EJ 14
 peorCifrado :: String -> [String] -> String 
 peorCifrado palabra [clave] = clave
@@ -140,11 +151,14 @@ peorCifrado p [c1,c2] | distancia p (cifrarVigenere p c1) <= distancia p (cifrar
 peorCifrado p (c1:c2:cs) | distancia p (cifrarVigenere p c1) <= distancia p (cifrarVigenere p c2)  = peorCifrado p (c1:cs)
                          | distancia p (cifrarVigenere p c1) > distancia p (cifrarVigenere p c2) = peorCifrado p (c2:cs)
 
+combinacionesVigenereConUnaClave::[String] -> String -> String -> [(String, String)] --devuelve la lista de vectores (msj,clave) que incluye cada msj de la lista input que al cifrar con clave devuelve cifrado
+combinacionesVigenereConUnaClave [] _ _ = []
+combinacionesVigenereConUnaClave (m:ms) clave cifrado | cifrarVigenere m clave == cifrado = (m, clave) : combinacionesVigenereConUnaClave ms clave cifrado
+                                                      | otherwise = combinacionesVigenereConUnaClave ms clave cifrado
 
 -- EJ 15
-combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)]
-combinacionesVigenere [] [] _ = []
-combinacionesVigenere [m] [c] cf | cifrarVigenere m c == cf = [(m, c)]
-                                 | otherwise =  []
-combinacionesVigenere (m:ms) (c:cs) cf | cifrarVigenere m c == cf = (m, c):combinacionesVigenere ms (c:cs) cf
-                                       | otherwise = combinacionesVigenere (m:ms) cs cf
+combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)] --que onda los repetidos?
+combinacionesVigenere _ [] _ = []
+combinacionesVigenere [mensaje] [clave] cifrado | cifrarVigenere mensaje clave == cifrado = [(mensaje, clave)]
+                                                | otherwise =  []
+combinacionesVigenere mensajes (c:cs) cifrado = combinacionesVigenereConUnaClave mensajes c cifrado ++ combinacionesVigenere mensajes cs cifrado
