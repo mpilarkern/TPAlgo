@@ -77,7 +77,7 @@ testsEjfrecuencia = test [
     "Caso 1: palabras es vacía" ~: (frecuencia []) ~?= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     "Caso 2: palabra en mayúscula" ~: (frecuencia "COMPUTACION") ~?= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     "Caso 3: palabra sin letras repetidas" ~: (frecuencia "intro") ~?= [0,0,0,0,0,0,0,0,20.0,0,0,0,0,20.0,20.0,0,0,20.0,0,20.0,0,0,0,0,0,0],
-    "Caso 4: palabra con letras repetidas" ~: expectlistProximity (frecuencia "codigo") [0,0,16.666667,16.666667,0,0,16.666667,0,16.666667,0,0,0,0,0,33.333333,0,0,0,0,0,0,0,0,0,0,0], --preguntar lo de igualdad de floats
+    "Caso 4: palabra con letras repetidas" ~: expectlistProximity (frecuencia "codigo") [0,0,16.666667,16.666667,0,0,16.666667,0,16.666667,0,0,0,0,0,33.333333,0,0,0,0,0,0,0,0,0,0,0], 
     "Caso 5: palabra con minúsculas y mayúsculas sin repetidas" ~: (frecuencia "IntRO") ~?= [0,0,0,0,0,0,0,0,0,0,0,0,0,50.0,0,0,0,0,0,50.0,0,0,0,0,0,0],
     "Caso 6: palabra con minúsculas y mayúsculas con minúsculas repetidas" ~: expectlistProximity (frecuencia "CodIGo") [0,0,0,33.333333,0,0,0,0,0,0,0,0,0,0,66.666667,0,0,0,0,0,0,0,0,0,0,0],
     "Caso 7: palabra con minúsculas y mayúsculas con mayúsculas repetidas" ~: expectlistProximity (frecuencia "CodIgO") [0,0,0,33.333333,0,0,33.333333,0,0,0,0,0,0,0,33.333333,0,0,0,0,0,0,0,0,0,0,0]
@@ -88,7 +88,7 @@ testsEjcifradoMasFrecuente = test [
     "Caso 2: dos caracteres iguales" ~: (cifradoMasFrecuente "codigo" 2) ~?= ('q', 33.333332),
     "Caso 3: varios pares de caracteres iguales" ~: expectAnyTuplaAprox (cifradoMasFrecuente "mayusculas" 3) [('d', 20.0),('x', 20.0),('v', 20.0)],
     "Caso 4: el caracter más repetido" ~: (cifradoMasFrecuente "cuadrada" 5) ~?= ('f', 37.5),
-    "Caso 5: letras mayúsculas y minúsculas sin repetir" ~: expectAnyTuplaAprox (cifradoMasFrecuente "IntRo" 1) [('o', 33.333332),('u', 33.333332),('p', 33.333332)], --expectlist y expectAny??
+    "Caso 5: letras mayúsculas y minúsculas sin repetir" ~: expectAnyTuplaAprox (cifradoMasFrecuente "IntRo" 1) [('o', 33.333332),('u', 33.333332),('p', 33.333332)],
     "Caso 6: letras mayúsculas y minúsculas con minúsculas repetidas" ~: (cifradoMasFrecuente "CoDigo" 2) ~?= ('q', 50.0),
     "Caso 5: letras mayúsculas y minúsculas con mayúsuclas repetidas" ~: expectAnyTuplaAprox (cifradoMasFrecuente "cOdiGO" 1) [('d', 33.333332),('e', 33.333332),('j', 33.333332)]
     ]
